@@ -6,13 +6,18 @@ import axios from 'axios';
 function App() {
 
   const [articleId, setArticleId] = useState('');
+  const [article, setArticle] = useState({});
 
     useEffect(() => {
       // POST request using axios inside useEffect React hook
+      var dateEnd = new Date();
+      dateEnd = dateEnd.toISOString().split('T')[0];
+      console.log("dateEnd",dateEnd);
       const article = {
-        "date_init":"2020-09-21",
-        "date_end":"2020-10-02"
+        "date_init":"2020-09-01",
+        "date_end":dateEnd
         };
+      setArticle(article);
       axios.post('https://api-aware.herokuapp.com/v1/user/count/', article)
           .then(response => {
             console.log(response);
@@ -34,6 +39,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Desde <strong>{String(article.date_init)}</strong> hasta <strong>{String(article.date_end)}</strong> tenemos lo siguiente:
+        </p>
         <p>
           Usuarios creados: {String(articleId.total)}
         </p>
